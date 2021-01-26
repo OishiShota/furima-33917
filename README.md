@@ -16,44 +16,70 @@
 
 - has_many :items
 - has_many :orders
+- has_many :addresses
+- has_many :cards
 
 ## items テーブル
 
-| Column   | Type       | Options                        |
-| -------- | ---------- | ------------------------------ |
-| name     | string     | null: false                    |
-| category | integer    | null: false                    |
-| price    | integer    | null: false                    |
-| user     | references | null: false, foreign_key: true |
+| Column              | Type       | Options                        |
+| ------------------- | ---------- | ------------------------------ |
+| product_name        | string     | null: false                    |
+| product_description | text       | null: false                    |
+| category_id         | integer    | null: false                    |
+| state_id            | integer    | null: false                    |
+| price               | integer    | null: false                    |
+| postage             | integer    | null: false                    |
+| shop_location       | string     | null: false                    |
+| preparation_time_id | integer    | null: false                    |
+| user_id             | references | null: false, foreign_key: true |
 
 ### Association
 
 - belongs_to :item
-- has_many :orders
+- has_one :order
+
+## adresses テーブル
+
+| Column    | Type       | Options                        |
+| --------- | ---------- | ------------------------------ |
+| postal_code | integer    | null: false                    |
+| prefectures | string     | null: false                    |
+| city        | string     | null: false                    |
+| adress1     | string     | null: false                    |
+| adress2     | string     | null: false                    |
+| tel         | integer    | null: true                     |
+| user_id     | references | null: false, foreign_key: true |
+
+### Association
+
+- belongs_to :user
+- has_one :prototype
+
+## cards テーブル
+
+| Column         | Type       | Options                        |
+| -------------- | ---------- | ------------------------------ |
+| card_token     | string     | null: false                    |
+| customer_token | string     | null: false                    |
+| user_id        | references | null: false, foreign_key: true |
+
+### Association
+
+- belongs_to :user
+- has_one :order
 
 ## orders テーブル
 
-| Column    | Type       | Options                        |
-| --------- | ---------- | ------------------------------ |
-| text      | text       | null: false                    |
-| user      | references | null: false, foreign_key: true |
-| prototype | references | null: false, foreign_key: true |
+| Column     | Type       | Options                        |
+| ---------- | ---------- | ------------------------------ |
+| item_id    | references | null: false, foreign_key: true |
+| user_id    | references | null: false, foreign_key: true |
+| card_id    | references | null: false, foreign_key: true |
+| address_id | references | null: false, foreign_key: true |
 
 ### Association
 
 - belongs_to :user
 - belongs_to :item
-- has_one :customer
-
-## customers テーブル
-
-| Column    | Type       | Options                        |
-| --------- | ---------- | ------------------------------ |
-| text      | text       | null: false                    |
-| user      | references | null: false, foreign_key: true |
-| prototype | references | null: false, foreign_key: true |
-
-### Association
-
-- belongs_to :user
-- belongs_to :prototype
+- belongs_to :care
+- belongs_to :address
