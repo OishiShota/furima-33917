@@ -6,7 +6,7 @@
 | ------------------ | ------ | ------------------------- |
 | email              | string | null: false, unique: true |
 | encrypted_password | string | null: false               |
-| user_name          | string | null: false               |
+| name          | string | null: false               |
 | first_name         | string | null: false               |
 | last_name          | string | null: false               |
 | first_kana         | string | null: false               |
@@ -28,7 +28,7 @@
 | state_id            | integer    | null: false                    |
 | price               | integer    | null: false                    |
 | shipping_cost_id    | integer    | null: false                    |
-| prefectures_id      | integer    | null: false                    |
+| prefecture_id      | integer    | null: false                    |
 | preparation_time_id | integer    | null: false                    |
 | user                | references | null: false, foreign_key: true |
 
@@ -42,12 +42,12 @@
 | Column         | Type       | Options                        |
 | -------------- | ---------- | ------------------------------ |
 | postal_code    | string     | null: false                    |
-| prefectures_id | integer    | null: false                    |
+| prefecture_id | integer    | null: false                    |
 | city           | string     | null: false                    |
 | block          | string     | null: false                    |
 | building       | string     |                                |
 | tel            | string     | null: false                    |
-| user           | references | null: false, foreign_key: true |
+| order           | references | null: false, foreign_key: true |
 
 ### Association
 
