@@ -12,6 +12,11 @@ RSpec.describe Item, type: :model do
       end
     end
     context "商品の出品ができない場合" do
+      it "商品画像がなければ登録できない" do
+        @item.image = nil
+        @item.valid?
+        expect(@item.errors.full_messages).to include "Image can't be blank"
+      end
       it "商品名がなければ登録できない" do
         @item.product_name = ""
         @item.valid?
@@ -82,8 +87,18 @@ RSpec.describe Item, type: :model do
         @item.valid?
         expect(@item.errors.full_messages).to include "Price must be less than 10000000"
       end
-      it "販売価格が半角数字でない場合登録できない" do
-        @item.price = "３３３"
+      it "販売価格が全角数字の場合登録できない" do
+        @item.price = "３３３３"
+        @item.valid?
+        expect(@item.errors.full_messages).to include "Price is not a number"
+      end
+      it "販売価格が英数混合の場合登録できない" do
+        @item.price = "a3a3a3"
+        @item.valid?
+        expect(@item.errors.full_messages).to include "Price is not a number"
+      end
+      it "販売価格が半角英語の場合登録できない" do
+        @item.price = "aaa"
         @item.valid?
         expect(@item.errors.full_messages).to include "Price is not a number"
       end
