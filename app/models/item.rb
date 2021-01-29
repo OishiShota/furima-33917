@@ -6,7 +6,7 @@ class Item < ApplicationRecord
   extend ActiveHash::Associations::ActiveRecordExtensions
   belongs_to :category
   belongs_to :state
-  belongs_to :shopping_cost
+  belongs_to :shipping_cost
   belongs_to :prefecture
   belongs_to :preparation_time
 
