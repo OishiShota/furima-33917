@@ -5,7 +5,6 @@ class OrdersController < ApplicationController
   end
   def create
     @adress_order = AdressOrder.new(order_params)
-    binding.pry
     if @adress_order.valid?
       @adress_order.save
       redirect_to root_path
