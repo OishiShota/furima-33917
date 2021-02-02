@@ -24,6 +24,11 @@ RSpec.describe AddressOrder, type: :model do
         @address_order.valid?
         expect(@address_order.errors.full_messages).to include("Postal code is invalid")
       end
+      it "郵便番号にハイフンがないと登録できない" do
+        @address_order.postal_code = "1111111"
+        @address_order.valid?
+        expect(@address_order.errors.full_messages).to include("Postal code is invalid")
+      end
       it "都道府県を選択しないと登録できない" do
         @address_order.prefecture_id = "1"
         @address_order.valid?
@@ -53,6 +58,26 @@ RSpec.describe AddressOrder, type: :model do
         @address_order.tel= "abc123"
         @address_order.valid?
         expect(@address_order.errors.full_messages).to include("Tel is invalid")
+      end
+      it "電話番が12桁以上だと登録ができない" do
+        num = "1"
+        11.times do |i|
+          num2 = "1"
+          num = "#{num}"+"#{num2}"
+        end
+        @address_order.tel= "#{num}"
+        @address_order.valid?
+        expect(@address_order.errors.full_messages).to include("Tel is invalid")
+      end
+      it "user_idが英数字混合だと登録ができない" do
+        @address_order.user_id = ""
+        @address_order.valid?
+        expect(@address_order.errors.full_messages).to include("User can't be blank")
+      end
+      it "item_idが英数字混合だと登録ができない" do
+        @address_order.item_id = ""
+        @address_order.valid?
+        expect(@address_order.errors.full_messages).to include("Item can't be blank")
       end
     end
   end
