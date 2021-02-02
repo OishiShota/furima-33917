@@ -1,7 +1,10 @@
 class ItemsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   before_action :set_item, only: [:edit, :update, :show, :destroy]
+  before_action :set_orders, only: [:index, :show, :edit, :update, :destroy]
   before_action :user_confirmation, only: [:edit, :update, :destroy]
+  before_action :sold_out, only: [:edit, :update, :destroy]
+  
 
   def index
     @items = Item.includes(:user).order("created_at DESC")
@@ -21,6 +24,7 @@ class ItemsController < ApplicationController
   end
 
   def show
+    @orders = Order.includes(:item)
   end
 
   def edit
@@ -54,7 +58,20 @@ class ItemsController < ApplicationController
   
   def user_confirmation
     unless @item.user.id == current_user.id
-      redirect_to action: :index
+      redirect_to root_path
+    end
+  end
+
+  def set_orders
+    @orders = Order.includes(:item)
+  end
+
+  def sold_out
+    @orders = Order.includes(:item)
+    @orders.each do |order|
+      if order.item_id == @item.id 
+        redirect_to root_path
+      end
     end
   end
 

@@ -1,12 +1,14 @@
 class OrdersController < ApplicationController
+  before_action :authenticate_user!
+  before_action :set_item
+  before_action :sold_out
+  before_action :user_confirmation
+
   def index
-    @item = Item.find(params[:item_id])
     @address_order = AddressOrder.new
   end
   def create
-    @item = Item.find(params[:item_id])
     @address_order = AddressOrder.new(order_params)
-    binding.pry
     if @address_order.valid?
       Payjp.api_key = ENV["PAYJP_SECRET_KEY"]
       Payjp::Charge.create(
@@ -17,7 +19,6 @@ class OrdersController < ApplicationController
       @address_order.save
       redirect_to root_path
     else
-      @item = Item.find(params[:item_id])
       render :index
     end
   end
@@ -25,5 +26,24 @@ class OrdersController < ApplicationController
   private
   def order_params
     params.require(:address_order).permit(:postal_code, :prefecture_id, :city, :block, :building, :tel).merge(user_id: current_user.id, item_id: params[:item_id], token: params[:token] )
+  end
+
+  def set_item
+    @item = Item.find(params[:item_id])
+  end
+  
+  def user_confirmation
+    if @item.user.id == current_user.id
+      redirect_to root_path
+    end
+  end
+
+  def sold_out
+    orders = Order.includes(:item)
+    orders.each do |order|
+      if order.item_id == @item.id 
+        redirect_to root_path
+      end
+    end
   end
 end
