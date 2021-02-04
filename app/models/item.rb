@@ -14,14 +14,11 @@ class Item < ApplicationRecord
 
   validates :product_name, presence:true, length:{maximum: 40}
   validates :product_description, presence:true, length:{maximum: 1000}
-  validates :price, presence:true, numericality: {only_integer: true, greater_than: 299, less_than: 10000000}
+  validates :price, presence:true, numericality: {only_integer: true, greater_than: 299, less_than: 10000000, message: "は半角数字(300~9999999)で入力してください" }
 
-  with_options presence: true do
-    validates :user
-    validates :image
-  end
+  validates :image, presence: { message: "を選択してください" }
 
-  with_options numericality: { other_than: 1 } do
+  with_options numericality: { other_than: 1, message: "を選択してください" } do
     validates :category_id
     validates :state_id
     validates :shipping_cost_id
