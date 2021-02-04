@@ -1,5 +1,5 @@
 class ItemsController < ApplicationController
-  before_action :authenticate_user!, except: [:index, :show]
+  before_action :authenticate_user!, except: [:index, :show, :search]
   before_action :set_item, only: [:edit, :update, :show, :destroy]
   before_action :user_confirmation, only: [:edit, :update, :destroy]
   before_action :sold_out, only: [:edit, :update, :destroy]
@@ -43,6 +43,10 @@ class ItemsController < ApplicationController
     else
       render :show
     end
+  end
+
+  def search
+    @items = SearchItemsService.search(params[:keyword]).order("created_at DESC")
   end
 
   private
