@@ -5,7 +5,7 @@
   <div class='item-contents'>
     <h2 class='title'>
     <% unless params[:keyword] == ""  %>
-      「<%= params[:keyword] %>」の検索結果は<%= @items.length %>件でした
+      「<%= params[:keyword] %>」の検索結果(<%= @items.length %>件)
     <% end %>
     </h2>
     <ul class='item-lists'>
