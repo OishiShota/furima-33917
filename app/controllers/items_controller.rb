@@ -46,7 +46,11 @@ class ItemsController < ApplicationController
   end
 
   def search
-    @items = SearchItemsService.search(params[:keyword]).order("created_at DESC")
+    if params[:keyword] == ""
+      redirect_to root_path
+    else
+      @items = SearchItemsService.search(params[:keyword]).order("created_at DESC")
+    end
   end
 
   private
