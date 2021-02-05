@@ -49,6 +49,10 @@ class ItemsController < ApplicationController
     @items = SearchItemsService.search(params[:keyword]).order("created_at DESC")
   end
 
+  def category
+    @items = Item.includes(:user).order("created_at DESC")
+  end
+
   private
 
   def item_params
