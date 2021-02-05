@@ -5,13 +5,11 @@
   <div class='item-contents'>
     <h2 class='title'>
     <% unless params[:keyword] == ""  %>
-      <%= params[:keyword] %>の検索結果
-    <% else %>
-      全ての商品
+      「<%= params[:keyword] %>」の検索結果は<%= @items.length %>件でした
     <% end %>
     </h2>
     <ul class='item-lists'>
-      <% @items.each do |item| %>
+    <% @items.each do |item| %>
       <li class='list'>
         <%= link_to item_path(item.id) do %>
         <div class='item-img-content'>
@@ -41,9 +39,6 @@
         </div>
         <% end %>
       </li>
-      <% end %>
-      <% if @items.length == 0 %>
-      <%= params[:keyword] %>に該当する商品は出品されていません
       <% end %>
     </ul>
   </div>
