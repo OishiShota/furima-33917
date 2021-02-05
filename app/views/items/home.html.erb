@@ -4,11 +4,7 @@
   <%# 商品一覧 %>
   <div class='item-contents'>
     <h2 class='title'>
-    <% unless params[:keyword] == ""  %>
-      <%= params[:keyword] %>の検索結果
-    <% else %>
       全ての商品
-    <% end %>
     </h2>
     <ul class='item-lists'>
       <% @items.each do |item| %>

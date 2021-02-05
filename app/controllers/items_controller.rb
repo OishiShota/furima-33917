@@ -6,7 +6,7 @@ class ItemsController < ApplicationController
   
 
   def index
-    @items = Item.includes(:user).order("created_at DESC")
+    @items = Item.includes(:user).order("created_at DESC").limit(5)
   end
 
   def new
@@ -46,11 +46,15 @@ class ItemsController < ApplicationController
   end
 
   def search
-    if params[:keyword] == ""
-      redirect_to root_path
-    else
+    unless params[:keyword] == ""
       @items = SearchItemsService.search(params[:keyword]).order("created_at DESC")
+    else
+      redirect_to home_items_path
     end
+  end
+
+  def home
+    @items = Item.includes(:user).order("created_at DESC")
   end
 
   private
