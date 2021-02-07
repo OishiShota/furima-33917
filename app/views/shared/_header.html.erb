@@ -12,8 +12,20 @@
   <div class='nav'>
     <ul class='lists-left'>
       <li><%= link_to '商品一覧', home_items_path, class: "category-list" %></li>
-      <li><%= link_to 'カテゴリー', "#", class: "category-list" %></li>
-      <li><%= link_to 'ブランド', "#", class: "category-list" %></li>
+      <li class = "category-list" id = "category-list">カテゴリー
+        <ul class="category-lists hidden" id = "pull-down"">
+          <% @categories.each do |category| %>
+            <% unless category.id == 1 %>
+              <li>
+              <%= form_with(url: category_items_path, local: true, method: :get, class: "category-form") do |form| %>
+                <%= form.submit category.name%>
+              <% end %>
+              </li>
+            <% end %>
+          <% end %>
+        </ul>
+      </li>
+      <li class = "category-list">ブランド</li>
     </ul>
     <ul class='lists-right'>
       <% if user_signed_in? %>

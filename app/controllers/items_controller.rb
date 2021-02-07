@@ -1,9 +1,9 @@
 class ItemsController < ApplicationController
-  before_action :authenticate_user!, except: [:index, :show, :search]
+  before_action :authenticate_user!, except: [:index, :show, :search, :home]
   before_action :set_item, only: [:edit, :update, :show, :destroy]
   before_action :user_confirmation, only: [:edit, :update, :destroy]
   before_action :sold_out, only: [:edit, :update, :destroy]
-  
+  before_action :set_category, only: [:index, :show, :search, :home, :category]
 
   def index
     @items = Item.includes(:user).order("created_at DESC").limit(5)
@@ -57,6 +57,14 @@ class ItemsController < ApplicationController
     @items = Item.includes(:user).order("created_at DESC")
   end
 
+  def category
+    unless params[:commit] == ""
+      @items = CategoryItemsService.category(params[:commit]).order("created_at DESC")
+    else
+      redirect_to home_items_path
+    end
+  end
+
   private
 
   def item_params
@@ -77,5 +85,9 @@ class ItemsController < ApplicationController
     unless @item.order == nil
       redirect_to root_path
     end
+  end
+
+  def set_category
+    @categories = Category.all
   end
 end

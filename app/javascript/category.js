@@ -1,12 +1,16 @@
-window.addEventListener('load', function(){
+function category(){
 
-  const pullDownButton = document.getElementById("category-list")
-  const pullDownParents = document.getElementById("pull-down")
+  const button = document.getElementById("category-list")
+  const parents = document.getElementById("pull-down")
 
-  pullDownButton.addEventListener('mouseover', function(){
-    pullDownParents.setAttribute("style", "display:block;")
+  button.addEventListener('mouseover', function(){
+    this.setAttribute("style", "background-color:gainsboro;")
+    parents.setAttribute("style", "display:block;")
   })
-  pullDownButton.addEventListener('mouseout', function(){
-    pullDownParents.setAttribute("style", "display:none;")
+  button.addEventListener('mouseout', function(){
+    this.removeAttribute("style", "background-color:gainsboro;")
+    parents.setAttribute("style", "display:none;")
   })
-})
+}
+
+window.addEventListener('load', category)

@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     collection do
       get 'search'
       get 'home'
+      get 'category'
     end
   end
 end
