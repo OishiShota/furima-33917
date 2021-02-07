@@ -17,15 +17,12 @@
           <% @categories.each do |category| %>
             <% unless category.id == 1 %>
               <li>
-              <%= form_with(url: category_items_path, local: true, method: :get, class: "category-form") do |form| %>
-                <%= form.submit category.name%>
-              <% end %>
+              <%= button_to category.name, category_items_path, { method: :get, class: "category-lists" , params: {name:category.name, id:category.id } } %>
               </li>
             <% end %>
           <% end %>
         </ul>
       </li>
-      <li class = "category-list">ブランド</li>
     </ul>
     <ul class='lists-right'>
       <% if user_signed_in? %>

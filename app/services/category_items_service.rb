@@ -1,8 +1,7 @@
 class CategoryItemsService
-  def self.category(category)
-    if category != ""
-      category = Category.find_by(name: category)
-      Item.where('category_id = ?',category.id)
+  def self.category(id)
+    if id != ""
+      Item.where('category_id = ?',id)
     end
   end
 end

@@ -58,8 +58,8 @@ class ItemsController < ApplicationController
   end
 
   def category
-    unless params[:commit] == ""
-      @items = CategoryItemsService.category(params[:commit]).order("created_at DESC")
+    unless params[:id] == ""
+      @items = CategoryItemsService.category(params[:id]).order("created_at DESC")
     else
       redirect_to home_items_path
     end
