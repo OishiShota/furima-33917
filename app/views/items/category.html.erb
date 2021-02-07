@@ -4,8 +4,8 @@
   <%# 商品一覧 %>
   <div class='item-contents'>
     <h2 class='title'>
-    <% unless params[:keyword] == ""  %>
-      「<%= params[:keyword] %>」の検索結果(<%= @items.length %>件)
+    <% unless params[:name] == ""  %>
+      「<%= params[:name] %>」の商品(<%= @items.length %>件)
     <% end %>
     </h2>
     <ul class='item-lists'>

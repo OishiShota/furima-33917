@@ -122,8 +122,8 @@
 
   <%# 商品一覧 %>
   <div class='item-contents'>
-    <h2 class='title'>ピックアップカテゴリー</h2>
-    <%= link_to '新規投稿商品', new_item_path, class: "subtitle" %>
+    <h2 class='title'>最新投稿商品</h2>
+    <%= link_to '投稿商品一覧へ', home_items_path, class: "subtitle" %>
     <ul class='item-lists'>
       <% @items.each do |item| %>
       <li class='list'>

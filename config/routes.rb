@@ -5,6 +5,8 @@ Rails.application.routes.draw do
     resources :orders, only:[:index, :create]
     collection do
       get 'search'
+      get 'home'
+      get 'category'
     end
   end
 end

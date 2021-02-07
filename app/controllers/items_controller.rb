@@ -1,12 +1,12 @@
 class ItemsController < ApplicationController
-  before_action :authenticate_user!, except: [:index, :show, :search]
+  before_action :authenticate_user!, except: [:index, :show, :search, :home]
   before_action :set_item, only: [:edit, :update, :show, :destroy]
   before_action :user_confirmation, only: [:edit, :update, :destroy]
   before_action :sold_out, only: [:edit, :update, :destroy]
-  
+  before_action :set_category, only: [:index, :show, :search, :home, :category]
 
   def index
-    @items = Item.includes(:user).order("created_at DESC")
+    @items = Item.includes(:user).order("created_at DESC").limit(5)
   end
 
   def new
@@ -46,7 +46,23 @@ class ItemsController < ApplicationController
   end
 
   def search
-    @items = SearchItemsService.search(params[:keyword]).order("created_at DESC")
+    unless params[:keyword] == ""
+      @items = SearchItemsService.search(params[:keyword]).order("created_at DESC")
+    else
+      redirect_to home_items_path
+    end
+  end
+
+  def home
+    @items = Item.includes(:user).order("created_at DESC")
+  end
+
+  def category
+    unless params[:id] == ""
+      @items = CategoryItemsService.category(params[:id]).order("created_at DESC")
+    else
+      redirect_to home_items_path
+    end
   end
 
   private
@@ -69,5 +85,9 @@ class ItemsController < ApplicationController
     unless @item.order == nil
       redirect_to root_path
     end
+  end
+
+  def set_category
+    @categories = Category.all
   end
 end
