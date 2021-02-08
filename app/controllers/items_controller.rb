@@ -6,7 +6,7 @@ class ItemsController < ApplicationController
   before_action :set_category, only: [:index, :show, :search, :home, :category]
 
   def index
-    @items = Item.includes(:user).order("created_at DESC").limit(5)
+    @items = Item.includes(:user).order("created_at DESC").limit(3)
   end
 
   def new
